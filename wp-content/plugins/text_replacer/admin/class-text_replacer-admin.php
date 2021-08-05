@@ -20,7 +20,8 @@
  * @subpackage Text_replacer/admin
  * @author     Shyam Sundar Maury <shyam@baseapp.com>
  */
-class Text_replacer_Admin {
+class Text_replacer_Admin
+{
 
 	/**
 	 * The ID of this plugin.
@@ -47,11 +48,11 @@ class Text_replacer_Admin {
 	 * @param      string    $plugin_name       The name of this plugin.
 	 * @param      string    $version    The version of this plugin.
 	 */
-	public function __construct( $plugin_name, $version ) {
+	public function __construct($plugin_name, $version)
+	{
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
-
 	}
 
 	/**
@@ -59,7 +60,8 @@ class Text_replacer_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_styles() {
+	public function enqueue_styles()
+	{
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -73,8 +75,7 @@ class Text_replacer_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/text_replacer-admin.css', array(), $this->version, 'all' );
-
+		wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/text_replacer-admin.css', array(), $this->version, 'all');
 	}
 
 	/**
@@ -82,7 +83,8 @@ class Text_replacer_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_scripts() {
+	public function enqueue_scripts()
+	{
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -96,11 +98,11 @@ class Text_replacer_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/text_replacer-admin.js', array( 'jquery' ), $this->version, false );
-
+		wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/text_replacer-admin.js', array('jquery'), $this->version, false);
 	}
 
-	public function render_admin() {		
+	public function render_admin()
+	{
 		//require plugin_dir_path( __FILE__ ) . 'includes/find_replace.php';
 
 		//
@@ -109,74 +111,85 @@ class Text_replacer_Admin {
 
 		//
 		// Create options
-		CSF::createOptions( $prefix, array(
+		CSF::createOptions($prefix, array(
+			'framework_title' => ' Text Replacer  <small> by  Shyam</small>',
 			'menu_title' => 'Replacer Admin',
 			'menu_slug'  => 'my-framework',
-		) );
+			'menu_icon' => 'dashicons-editor-bold',
+
+		
+
+		));
+
 
 		// Create a section
-		CSF::createSection( $prefix, array(
-			'title'  => 'Core Settings',
+		CSF::createSection($prefix, array(
+
+			'title'  => 'Text Replacer',
 			'fields' => array(
-       // A switcher
+				// A switcher
 				array(
 					'id'    => 'opt-switcher-1',
 					'type'  => 'switcher',
 					'title' => 'Switcher',
-				  ),
-			// A text field
-			array(
-				'id'    => 'opt-search',
-				'type'  => 'text',
-				'title' => 'Search',
-			),
-
-			array(
-				'id'    => 'opt-replace',
-				'type'  => 'text',
-				'title' => 'Replace',
-				'validate' => 'min_3char',
-
-			),
-			array(
-				'id'     => 'opt-repeater-1',
-				'type'   => 'repeater',
-				'title'  => 'Repeater',
-				'fields' => array(
-					array(
-						'id'    => 'opt-switcher-1',
-						'type'  => 'switcher',
-						'title' => 'Switcher',
-					  ),
+				),
 				// A text field
 				array(
 					'id'    => 'opt-search',
 					'type'  => 'text',
 					'title' => 'Search',
+					'validate' => 'min_3char',
+
 				),
-	
+
+
 				array(
 					'id'    => 'opt-replace',
 					'type'  => 'text',
 					'title' => 'Replace',
 					'validate' => 'min_3char',
-	
+
 				),
-				 
-			  
+				array(
+					'id'     => 'opt-repeater-1',
+					'type'   => 'repeater',
+
+					'fields' => array(
+						array(
+							'id'    => 'opt-switcher-1',
+							'type'  => 'switcher',
+							'title' => 'Switcher',
+
+						),
+						// A text field
+						array(
+							'id'    => 'opt-search1',
+							'type'  => 'text',
+							'title' => 'Search',
+							'validate' => 'min_3char',
+
+						),
+
+						array(
+							'id'    => 'opt-replace1',
+							'type'  => 'text',
+							'title' => 'Replace',
+							'validate' => 'min_3char',
+
+						),
+
+
+					),
 				),
-			  ),
 
 			)
-		) );
-		
-
+		));
 	}
-
 }
 
-function min_3char( $value ) {
-    if ( strlen( $value ) < 3 ) {
-      return esc_html__( 'Atleast 3 characters please', 'csf' );
-    }
-  }
+function min_3char($value)
+{
+	if (strlen($value) < 3) {
+		return esc_html__('Atleast 3 characters please', 'csf');
+	}
+}

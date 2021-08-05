@@ -20,7 +20,8 @@
  * @subpackage Text_replacer/public
  * @author     Shyam Sundar Maury <shyam@baseapp.com>
  */
-class Text_replacer_Public {
+class Text_replacer_Public
+{
 
 	/**
 	 * The ID of this plugin.
@@ -40,19 +41,32 @@ class Text_replacer_Public {
 	 */
 	private $version;
 
-
-	function change_content() {
+	function repeater_change_content()
+	{
 		$content = get_the_content();
-		$options = get_option( 'my_replacer' );
-
-		$search = $options['opt-search'];
-		$replace = $options['opt-replace'];
+		$options = get_option('my_replacer');
+	
+         if($options['opt-switcher-1'] == 1){
+			$search = $options['opt-search'];
+			$replace = $options['opt-replace'];
+			$content = str_replace($search, $replace, $content);
+		 }
 		
-		$content = str_replace($search,$replace,$content);
-				
-		return  $content;
-	  }
+		$rows = $options['opt-repeater-1'];
+		if ($rows) {
 
+			for ($i = 0; $i <= 100; $i++) {
+				if ($rows[$i]['opt-switcher-1'] == 1) {
+					$search = $rows[$i]['opt-search1'];
+					$replace = $rows[$i]['opt-replace1'];
+					$content = str_replace($search, $replace, $content);
+				}
+			}
+		}
+
+		return $content;
+	}
+	
 
 	/**
 	 * Initialize the class and set its properties.
@@ -61,13 +75,14 @@ class Text_replacer_Public {
 	 * @param      string    $plugin_name       The name of the plugin.
 	 * @param      string    $version    The version of this plugin.
 	 */
-	public function __construct( $plugin_name, $version ) {
+	public function __construct($plugin_name, $version)
+	{
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
 
-		add_filter( 'the_content', [$this,'change_content'] );
-
+		//add_filter('the_content', [$this, 'change_content']);
+		add_filter('the_content', [$this, 'repeater_change_content']);
 	}
 
 	/**
@@ -75,7 +90,8 @@ class Text_replacer_Public {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_styles() {
+	public function enqueue_styles()
+	{
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -89,8 +105,7 @@ class Text_replacer_Public {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/text_replacer-public.css', array(), $this->version, 'all' );
-
+		wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/text_replacer-public.css', array(), $this->version, 'all');
 	}
 
 	/**
@@ -98,7 +113,8 @@ class Text_replacer_Public {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_scripts() {
+	public function enqueue_scripts()
+	{
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -112,13 +128,11 @@ class Text_replacer_Public {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/text_replacer-public.js', array( 'jquery' ), $this->version, false );
-
+		wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/text_replacer-public.js', array('jquery'), $this->version, false);
 	}
 
 
-	public function replace_text() {
-
+	public function replace_text()
+	{
 	}
-
 }
