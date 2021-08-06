@@ -108,18 +108,20 @@ class Text_replacer_Admin
 		//
 		// Set a unique slug-like ID
 		$prefix = 'my_replacer';
-
 		//
 		// Create options
 		CSF::createOptions($prefix, array(
 			'framework_title' => ' Text Replacer  <small> by  Shyam</small>',
-			'menu_title' => 'Replacer Admin',
+			'menu_title' => ' Text Replacer',
 			'menu_slug'  => 'my-framework',
-			'menu_icon' => 'dashicons-editor-bold',
-
-		
+			'menu_icon' => 'dashicons-editor-paste-text',
+			'show_sub_menu' => true,
+			'footer_text'=>'<a href="http://www.google.com"><big>Help!</big></a>',
+			
+			
 
 		));
+	
 
 
 		// Create a section
@@ -127,6 +129,7 @@ class Text_replacer_Admin
 
 			'title'  => 'Text Replacer',
 			'fields' => array(
+			
 				// A switcher
 				array(
 					'id'    => 'opt-switcher-1',
@@ -150,6 +153,7 @@ class Text_replacer_Admin
 					'validate' => 'min_3char',
 
 				),
+			
 				array(
 					'id'     => 'opt-repeater-1',
 					'type'   => 'repeater',
@@ -186,10 +190,43 @@ class Text_replacer_Admin
 		));
 	}
 }
-
+//check the value have at list three char
 function min_3char($value)
 {
 	if (strlen($value) < 3) {
 		return esc_html__('Atleast 3 characters please', 'csf');
 	}
 }
+
+// adding sub-menu
+function wp_replacer()
+{
+    add_submenu_page(
+		
+        'my-framework',
+        'Text Replace',
+        'Text Replace',
+        'manage_options',
+        'my-framework',
+    );
+	add_submenu_page(
+		
+        'my-framework',
+        'Visit Site',
+        'Visit Site',
+        'manage_options',
+       'https://www.google.com/',
+    );
+}
+add_action('admin_menu', 'wp_replacer');
+
+
+// remove tools submenu
+function remove_sub_menu() {
+    $page = remove_submenu_page( 'tools.php', 'csf-welcome' );
+}
+add_action( 'admin_menu', 'remove_sub_menu' );
+
+
+
+

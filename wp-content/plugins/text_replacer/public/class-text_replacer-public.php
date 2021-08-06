@@ -65,7 +65,19 @@ class Text_replacer_Public
 		}
 
 		return $content;
-	}
+	} 
+
+
+
+
+
+
+
+
+
+
+
+
 	
 
 	/**
@@ -81,7 +93,7 @@ class Text_replacer_Public
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
 
-		//add_filter('the_content', [$this, 'change_content']);
+	
 		add_filter('the_content', [$this, 'repeater_change_content']);
 	}
 
